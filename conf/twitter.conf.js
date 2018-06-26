@@ -4,18 +4,21 @@ exports.config = {
 
   updateJob: false,
   specs: [
-    './tests/specs/single_test.js'
+    './tests/specs/twitter.js'
   ],
   exclude: [],
 
   capabilities: [{
+  	// device: 'iPhone 6S',
+  	// os_version: '9.1',
+
     device: 'iPhone 7',
     os_version: '10.3',
     real_mobile: 'true',
+
     // browser: 'safari',
     // browser_version: '10',
 
-    name: 'wdio',
     build: 'twitter debug'
   }],
 
@@ -23,7 +26,7 @@ exports.config = {
   coloredLogs: true,
   screenshotPath: './errorShots/',
   baseUrl: '',
-  waitforTimeout: 10000,
+  waitforTimeout: 100 * 1000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
   host: 'hub.browserstack.com',
@@ -31,5 +34,10 @@ exports.config = {
   framework: 'mocha',
   mochaOpts: {
       ui: 'bdd'
+  },
+
+// Set 'name' capability depending on test filename
+  beforeSession: function (config, capabilities, specs) { 
+    capabilities.name = specs && specs[0].split('/').pop() || undefined;
   }
 }
