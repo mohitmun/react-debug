@@ -14,7 +14,18 @@ describe('Twitter', function() {
       .click("[data-testid=\"directMessagesLink\"]")
       .click("[data-testid=\"fab-message\"]")
       .element("[data-testid=\"searchPeople\"]")
-      .setValue(["jack","\uE00D"])
+      //.setValue(["jack","\uE00D"])
+      .execute(function(){
+        input = document.querySelectorAll('[data-testid=searchPeople]')[0];
+        input.focus();
+        input.value = "jack"
+        event = new Event('input', { bubbles: true });
+        tracker = input._valueTracker;
+        if (tracker) {
+          tracker.setValue("");
+        }
+        input.dispatchEvent(event);
+      })
       // .setValue("[data-testid=\"searchPeople\"]","jack")
       .pause(1500)
 
